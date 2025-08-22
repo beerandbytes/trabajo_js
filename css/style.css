@@ -1,0 +1,210 @@
+/* Importar Tipografía Satoshi desde Fontshare */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Fragment+Mono:ital@0;1&display=swap');
+
+/* Estilos Generales con Nueva Paleta de Colores y Tipografía */
+:root {
+    --text: #040b02;
+    --background: #f5fcf3;
+    --primary: #62d840;
+    --secondary: #95e4e9;
+    --accent: #5bacdd;
+    --font-family-base: 'Satoshi', sans-serif; /* Tipografía actualizada */
+
+    /* Retrasos para la secuencia de animación */
+    --delay-1: 0.1s;
+    --delay-2: 0.2s;
+    --delay-3: 0.3s;
+    --delay-4: 0.4s;
+    --delay-5: 0.5s;
+    --delay-6: 0.6s;
+    --delay-7: 0.7s;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--background);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-weight: 400; /* Peso base para el texto normal */
+}
+
+/* El contenido principal crece para empujar el footer */
+main {
+    flex-grow: 1;
+}
+
+/* Tipografía Específica */
+h1, h2, h3, h4, h5, h6, .display-4 {
+    font-weight: 700; /* Negrita para todos los encabezados */
+}
+
+.lead {
+    font-weight: 400;
+}
+
+/* Barra de Navegación */
+.navbar {
+    background-color: var(--text) !important;
+}
+
+.navbar-brand {
+    font-weight: 700; /* Más grueso para el logo */
+    letter-spacing: 1px;
+    color: var(--primary) !important;
+}
+
+.nav-link {
+    font-weight: 500; /* Peso medio para los enlaces */
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #fff !important;
+}
+
+/* Botones y Enlaces */
+.btn {
+    font-weight: 600;
+}
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-primary:hover {
+    background-color: #52b435;
+    border-color: #52b435;
+}
+a {
+    color: var(--accent);
+}
+a:hover {
+    color: var(--primary);
+}
+
+/* Estilos para las tarjetas de noticias */
+.card-title {
+    font-weight: 600; /* Semi-negrita para los títulos de las tarjetas */
+}
+.card-emoji-container {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    overflow: hidden;
+}
+.card-emoji {
+    font-size: clamp(3.5rem, 15vw, 5rem);
+    line-height: 1;
+}
+.card .card-title a {
+    color: var(--text);
+    text-decoration: none;
+}
+.card .card-title a:hover {
+    color: var(--text);
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid var(--accent);
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Galería y Carrusel */
+.carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+
+/* --- SECCIÓN DE ANIMACIONES MEJORADA --- */
+
+/* Keyframes de Animación */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-25px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(25px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Clase base para elementos animados */
+.animated {
+    opacity: 0; /* Empiezan invisibles */
+    animation-fill-mode: forwards; /* Mantiene el estado final */
+    animation-duration: 0.7s;
+    animation-timing-function: ease-out;
+}
+
+/* Clases específicas para cada animación */
+.animate-fade-in { animation-name: fadeIn; }
+.animate-slide-up { animation-name: slideInUp; }
+.animate-slide-left { animation-name: slideInLeft; }
+.animate-slide-right { animation-name: slideInRight; }
+.animate-scale-in { animation-name: scaleIn; }
+
+/* Clases de utilidad para los retrasos */
+.delay-1 { animation-delay: var(--delay-1); }
+.delay-2 { animation-delay: var(--delay-2); }
+.delay-3 { animation-delay: var(--delay-3); }
+.delay-4 { animation-delay: var(--delay-4); }
+.delay-5 { animation-delay: var(--delay-5); }
+.delay-6 { animation-delay: var(--delay-6); }
+.delay-7 { animation-delay: var(--delay-7); }
+
+/* Pie de Página */
+footer {
+    background-color: var(--text) !important;
+}
+footer .social-icon {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+footer .social-icon:hover {
+    color: var(--primary);
+    transform: scale(1.2);
+}
+footer a {
+    text-decoration: none;
+    color: var(--secondary) !important;
+}
+footer a:hover {
+    text-decoration: underline;
+    color: var(--primary) !important;
+}
