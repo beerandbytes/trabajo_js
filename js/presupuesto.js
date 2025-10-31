@@ -15,9 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const extras = document.querySelectorAll('.extra');
     
     // Elementos del desglose de precio
-    const costeBaseEl = document.getElementById('costeBase');
-    const ivaEl = document.getElementById('iva');
-    const presupuestoTotalEl = document.getElementById('presupuestoTotal');
+    const costeBase = document.getElementById('costeBase');
+    const iva = document.getElementById('iva');
+    const presupuestoTotal = document.getElementById('presupuestoTotal');
+    const descuento = document.getElementById('descuento');
     
     // Botón y condiciones
     const condiciones = document.getElementById('condiciones');
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nombre: /^[a-zA-Z\s]{1,15}$/,
         apellidos: /^[a-zA-Z\s]{1,40}$/,
         telefono: /^\d{9}$/,
-        email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        email: /^[\w\-\.]+@([\w-]+\.)+[a-zA-Z]{2,}$/
     };
 
     // Objeto para almacenar el estado de validación
@@ -54,34 +55,39 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Función para calcular y mostrar el presupuesto
-    const calcularPresupuesto = () => {
-        // 1. Obtener el precio base del producto
-        let subtotal = parseFloat(producto.value) || 0;
-        
-        // 2. Sumar el coste de los extras seleccionados
-        extras.forEach(extra => {
-            if (extra.checked) {
-                subtotal += parseFloat(extra.value) || 0;
-            }
-        });
-
-        // 3. Aplicar descuento según el plazo
-        const meses = parseInt(plazo.value) || 1;
-        if (meses > 6) {
-            subtotal *= 0.85; // 15% de descuento
-        } else if (meses > 3) {
-            subtotal *= 0.95; // 5% de descuento
+// Función para calcular y mostrar el presupuesto (CORREGIDA)
+const calcularPresupuesto = () => {
+    // 1. Calcular el subtotal original sumando el producto y los extras
+    let subtotalOriginal = parseFloat(producto.value) || 0;
+    extras.forEach(extra => {
+        if (extra.checked) {
+            subtotalOriginal += parseFloat(extra.value) || 0;
         }
-        
-        // 4. Calcular el IVA y el total
-        const iva = subtotal * 0.21;
-        const total = subtotal + iva;
+    });
 
-        // 5. Actualizar la interfaz con los nuevos valores
-        costeBaseEl.textContent = `${subtotal.toFixed(2)}€`;
-        ivaEl.textContent = `${iva.toFixed(2)}€`;
-        presupuestoTotalEl.textContent = `${total.toFixed(2)}€`;
-    };
+    // 2. Calcular el importe del descuento basado en el subtotal original
+    const meses = parseInt(plazo.value) || 1;
+    let importeDescuento = 0;
+    if (meses > 6) {
+        importeDescuento = subtotalOriginal * 0.15; // 15% de descuento
+    } else if (meses > 3) {
+        importeDescuento = subtotalOriginal * 0.05; // 5% de descuento
+    }
+
+    // 3. Calcular el IVA sobre el subtotal original (antes de descuentos)
+    const importeIva = subtotalOriginal * 0.21;
+
+    // 4. Calcular el total final
+    // (Coste original - Descuento) + IVA
+    const total = (subtotalOriginal - importeDescuento) + importeIva;
+
+    // 5. Actualizar la interfaz con los nuevos valores
+    // Se usan las variables originales que apuntan a los elementos del DOM
+    costeBase.textContent = `${subtotalOriginal.toFixed(2)}€`;
+    descuento.textContent = `-${importeDescuento.toFixed(2)}€`; // Se añade un "-" para mayor claridad
+    iva.textContent = `${importeIva.toFixed(2)}€`;
+    presupuestoTotal.textContent = `${total.toFixed(2)}€`;
+};
 
     // Función para comprobar la validez general del formulario y habilitar/deshabilitar el botón
     const checkFormValidity = () => {
