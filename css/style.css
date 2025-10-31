@@ -58,12 +58,13 @@ h1, h2, h3, h4, h5, h6, .display-4 {
 
 .nav-link {
     font-weight: 500; /* Peso medio para los enlaces */
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgb(235, 252, 0) !important;
 }
 
 .nav-link.active,
 .nav-link:hover {
-    color: #fff !important;
+    color: #00fff2 !important;
+    font-weight: 800;
 }
 
 /* Botones y Enlaces */
